@@ -8,7 +8,7 @@ this simple python script will show you how to send an image to google cloud vis
 	3. Install python client liberaies
 		1. pip install --upgrade google-cloud-texttospeech
 		2. pip install --upgrade google-cloud-vision
-	4. create service account file see https://cloud.google.com/docs/authentication/getting-started
+	4. create service account file [see this link](https://cloud.google.com/docs/authentication/getting-started)
 	5. SET GOOGLE_APPLICATION_CREDENTIAL environment variable to the path of the service account file that you downloaded
 	6. Run python script
 
