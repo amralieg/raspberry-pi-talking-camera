@@ -1,8 +1,8 @@
 # python-google-cloud-vision
 this simple python script will show you how to send an image to google cloud vision and get the response back and sends it to google cloud text to speech to tell the content of the image.
 
-# Running the script
-## to run this script, you'll need to do the following steps:
+## Running the script
+### to run this script, you'll need to do the following steps:
 	1. Have a google cloud platform account
 	2. Enable the Google Cloud Vision API and the Google Cloud Text to Speech API
 	3. Install python client liberaies
