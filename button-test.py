@@ -15,11 +15,8 @@ sound_path = '/tmp/sound.wav'
 text = "Watch out for Daleks"
 
 
-def take_photo():
+def take_photo(photo_path):
     camera.capture(photo_path)
-    say_it(text, sound_path)
-    #play_sound('dalek')
-    play_sound(None)
 
 
 def play_sound(description):
@@ -68,6 +65,29 @@ def say_it(text, file):
         print('Audio content written to file ' + file)
 
 
+def see_it(file):
+    res = ""
+    with open(file, "rb") as imageFile:
+        client = vision.ImageAnnotatorClient()
+        response = client.annotate_image({
+            'image': {'content': imageFile.read()},
+            'features': [{'type': vision.enums.Feature.Type.LABEL_DETECTION}]
+        })
+
+        res = "sorry, I can't see that quiet clearly"
+        if len(response.label_annotations) > 0:
+            res = random.choice(greetings_list) + response.label_annotations[0].description
+    print(res)
+    return res
+
+
+def action():
+    take_photo(photo_path)
+    #say_it(text, sound_path)
+    #play_sound('dalek')
+    play_sound(None)
+
+
 pygame.init()
 shutter_button = Button(SHUTTER)
 replay_button = Button(REPLAY)
@@ -77,7 +97,7 @@ camera.resolution = (1024, 768)
 camera.start_preview()
 sleep(2)  # Camera warm-up time
 
-shutter_button.when_pressed = take_photo
+shutter_button.when_pressed = action
 replay_button.when_released = replay
 
 pause()
