@@ -12,30 +12,24 @@ SHUTTER = "GPIO8"
 REPLAY = "GPIO7"
 photo_path = '/tmp/photo.jpg'
 sound_path = '/tmp/sound.wav'
-text = "Watch out for Daleks"
+
+greetings_list = [
+    "what a nice ", "that's a cool ", "I like this ",
+    "nice ", "this is a ", "looks like a ", "wow, that's a very cool "
+]
 
 
 def take_photo(photo_path):
     camera.capture(photo_path)
 
 
-def play_sound(description):
-    global sound_path
-    if description == "dalek":
-        sound_path = 'sound/exterminate.wav'
-        recording = pygame.mixer.Sound(sound_path)
-        for _ in range(3):
-            recording.play()
-            sleep(2)
-    else:
-        sound_path = '/tmp/sound.wav'
+def play_sound(sound_path):
         recording = pygame.mixer.Sound(sound_path)
         recording.play()
 
 
 def replay():
-        recording = pygame.mixer.Sound(sound_path)
-        recording.play()
+    play_sound(sound_path)
 
 
 def say_it(text, file):
@@ -65,7 +59,7 @@ def say_it(text, file):
         print('Audio content written to file ' + file)
 
 
-def see_it(file):
+def see_it(file) -> 'res':
     res = ""
     with open(file, "rb") as imageFile:
         client = vision.ImageAnnotatorClient()
@@ -73,19 +67,24 @@ def see_it(file):
             'image': {'content': imageFile.read()},
             'features': [{'type': vision.enums.Feature.Type.LABEL_DETECTION}]
         })
-
-        res = "sorry, I can't see that quiet clearly"
+        res = "sorry, I can't see that quite clearly"
         if len(response.label_annotations) > 0:
-            res = random.choice(greetings_list) + response.label_annotations[0].description
+            res = response.label_annotations[0].description
     print(res)
     return res
 
 
 def action():
+    global sound_path
     take_photo(photo_path)
-    #say_it(text, sound_path)
-    #play_sound('dalek')
-    play_sound(None)
+    description = see_it(photo_path)
+    if description == 'Rat':
+        sound_path = 'sound/its-a-rat.wav'
+    else:
+        sound_path = '/tmp/sound.wav'
+        description = random.choice(greetings_list) + description
+        say_it(description, sound_path)
+    play_sound(sound_path)
 
 
 pygame.init()
