@@ -13,5 +13,8 @@ It uses OKDO Raspbperry PI 4 Kit [https://www.okdo.com/p/okdo-raspberry-pi-4-4gb
 	3. pip3 install --upgrade google-cloud-translate
 4. create service account file (see this link)[https://cloud.google.com/docs/authentication/getting-started]
 5. SET GOOGLE_APPLICATION_CREDENTIAL environment variable to the path of the service account file that you downloaded
-6. Run python script
+6. Enable camera interface on Raspberry PI [https://www.raspberrypi.org/documentation/configuration/camera.md]
+7. Using a breadboard, connect 2 buttons one on GPIO7 and one on GPIO8
+7. Run python script
+8. cick on the button to capture the image and trigger AI recognition and, the second button will do a replay of the last recognised image.
 
