@@ -91,7 +91,8 @@ pygame.init()
 shutter_button = Button(SHUTTER)
 replay_button = Button(REPLAY)
 camera = PiCamera()
-camera.resolution = (1024, 768)
+#camera.resolution = (1024, 768)
+camera.resolution = (640, 480)
 
 camera.start_preview()
 sleep(2)  # Camera warm-up time
