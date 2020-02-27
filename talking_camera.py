@@ -7,6 +7,7 @@ import random
 
 from google.cloud import vision
 from google.cloud import texttospeech
+from google.cloud import translate_v2 as translate
 
 SHUTTER = "GPIO8"
 REPLAY = "GPIO7"
@@ -17,6 +18,14 @@ greetings_list = [
     "what a nice ", "that's a cool ", "I like this ",
     "nice ", "this is a ", "looks like a ", "wow, that's a very cool "
 ]
+
+target_languages = {
+    "fr ",  ## french
+    "es ",  ## spanish
+    "it",  ## italian
+    "ar",  ## arabic
+    "zh"  ## chinese
+}
 
 
 def take_photo(photo_path):
@@ -72,6 +81,20 @@ def see_it(file) -> 'res':
             res = response.label_annotations[0].description
     print(res)
     return res
+
+
+def translate_it(text, target_language):
+    translate_client = translate.Client()
+    # target_language to be selected from target_languages list above
+    # Text can also be a sequence of strings, in which case this method
+    # will return a sequence of results for each text.
+    result = translate_client.translate(text, target_language)
+
+    print(u'Text: {}'.format(result['input']))
+    print(u'Translation: {}'.format(result['translatedText']))
+    print(u'Detected source language: {}'.format(
+        result['detectedSourceLanguage']))
+    return result['translatedText']
 
 
 def action():
