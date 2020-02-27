@@ -14,18 +14,22 @@ REPLAY = "GPIO7"
 photo_path = '/tmp/photo.jpg'
 sound_path = '/tmp/sound.wav'
 
-greetings_list = [
+prefixes = [
     "what a nice ", "that's a cool ", "I like this ",
     "nice ", "this is a ", "looks like a ", "wow, that's a very cool "
 ]
 
-target_languages = {
-    "fr ",  ## french
-    "es ",  ## spanish
-    "it",  ## italian
-    "ar",  ## arabic
-    "zh"  ## chinese
-}
+
+# ISO 639-1 standard language codes
+languages = [
+    'en-gb',  # English
+    'en-us',  # American
+    'fr-fr',  # French
+    'es',     # Spanish
+    'it',     # Italian
+    'ar-eg',  # Arabic (Egypt)
+    'zh-cn'   # Chinese (PRC)
+]
 
 
 def take_photo(photo_path):
@@ -42,6 +46,8 @@ def replay():
 
 
 def say_it(text, file):
+    """Generates audio file containing text-to-speach conversion"""
+
     # Instantiates a client
     client = texttospeech.TextToSpeechClient()
 
@@ -68,15 +74,15 @@ def say_it(text, file):
         print('Audio content written to file ' + file)
 
 
-def see_it(file) -> 'res':
-    res = ""
+def see_it(file) -> str:
+    """Returns name of object identified in image file"""
+    res = None
     with open(file, "rb") as imageFile:
         client = vision.ImageAnnotatorClient()
         response = client.annotate_image({
             'image': {'content': imageFile.read()},
             'features': [{'type': vision.enums.Feature.Type.LABEL_DETECTION}]
         })
-        res = "sorry, I can't see that quite clearly"
         if len(response.label_annotations) > 0:
             res = response.label_annotations[0].description
     print(res)
@@ -97,6 +103,14 @@ def translate_it(text, target_language):
     return result['translatedText']
 
 
+def get_phrase(prefixes, thing) -> str:
+    """Returns phrase to be spoken"""
+    if thing:
+        return random.choice(prefixes) + thing
+    else:
+        return "sorry, I can't see that quite clearly"
+
+
 def action():
     global sound_path
     take_photo(photo_path)
@@ -105,7 +119,7 @@ def action():
         sound_path = 'sound/its-a-rat.wav'
     else:
         sound_path = '/tmp/sound.wav'
-        description = random.choice(greetings_list) + description
+        description = get_phrase(prefixes, description)
         say_it(description, sound_path)
     play_sound(sound_path)
 
@@ -114,7 +128,7 @@ pygame.init()
 shutter_button = Button(SHUTTER)
 replay_button = Button(REPLAY)
 camera = PiCamera()
-#camera.resolution = (1024, 768)
+# camera.resolution = (1024, 768)
 camera.resolution = (640, 480)
 
 camera.start_preview()
