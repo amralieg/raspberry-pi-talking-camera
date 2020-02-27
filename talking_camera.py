@@ -19,6 +19,14 @@ greetings_list = [
     "nice ", "this is a ", "looks like a ", "wow, that's a very cool "
 ]
 
+target_languages = {
+    "fr ",  ## french
+    "es ",  ## spanish
+    "it",  ## italian
+    "ar",  ## arabic
+    "zh"  ## chinese
+}
+
 
 def take_photo(photo_path):
     camera.capture(photo_path)
@@ -77,6 +85,7 @@ def see_it(file) -> 'res':
 
 def translate_it(text, target_language):
     translate_client = translate.Client()
+    # target_language to be selected from target_languages list above
     # Text can also be a sequence of strings, in which case this method
     # will return a sequence of results for each text.
     result = translate_client.translate(text, target_language)
