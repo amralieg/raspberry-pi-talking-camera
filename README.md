@@ -5,13 +5,13 @@ It uses OKDO Raspbperry PI 4 Kit [https://www.okdo.com/p/okdo-raspberry-pi-4-4gb
 
 ## Prerequisites
 ### to run this project, you'll need to do the following steps:
-	1. Have a google cloud platform account, you can create one for free.
-	2. Enable the Google Cloud Vision API and the Google Cloud Text to Speech API
-	3. Install python client liberaies
-		1. pip3 install --upgrade google-cloud-texttospeech
-		2. pip3 install --upgrade google-cloud-vision
-		3. pip3 install --upgrade google-cloud-translate
-	4. create service account file (see this link)[https://cloud.google.com/docs/authentication/getting-started]
-	5. SET GOOGLE_APPLICATION_CREDENTIAL environment variable to the path of the service account file that you downloaded
-	6. Run python script
+1. Have a google cloud platform account, you can create one for free.
+2. Enable the Google Cloud Vision API and the Google Cloud Text to Speech API
+3. Install python client liberaies
+	1. pip3 install --upgrade google-cloud-texttospeech
+	2. pip3 install --upgrade google-cloud-vision
+	3. pip3 install --upgrade google-cloud-translate
+4. create service account file (see this link)[https://cloud.google.com/docs/authentication/getting-started]
+5. SET GOOGLE_APPLICATION_CREDENTIAL environment variable to the path of the service account file that you downloaded
+6. Run python script
 
