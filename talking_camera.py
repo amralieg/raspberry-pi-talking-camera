@@ -10,7 +10,6 @@ from google.cloud import texttospeech
 from google.cloud import translate_v2 as translate
 
 SHUTTER = "GPIO8"
-REPLAY = "GPIO7"
 photo_path = '/tmp/photo.jpg'
 sound_path = '/tmp/sound.wav'
 
@@ -39,10 +38,6 @@ def take_photo(photo_path):
 def play_sound(sound_path):
         recording = pygame.mixer.Sound(sound_path)
         recording.play()
-
-
-def replay():
-    play_sound(sound_path)
 
 
 def say_it(text, file):
@@ -125,16 +120,12 @@ def action():
 
 
 pygame.init()
-shutter_button = Button(SHUTTER)
-replay_button = Button(REPLAY)
+# Button with external pull-down resistor
+shutter_button = Button(SHUTTER, pull_up=None, active_state=False)
 camera = PiCamera()
 # camera.resolution = (1024, 768)
 camera.resolution = (640, 480)
-
 camera.start_preview()
 sleep(2)  # Camera warm-up time
-
 shutter_button.when_pressed = action
-replay_button.when_released = replay
-
 pause()
